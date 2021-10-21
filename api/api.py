@@ -4,7 +4,7 @@ from rest_framework import viewsets, permissions, generics
 from rest_framework import status
 from rest_framework.response import Response
 from knox.models import AuthToken
-import numpy as np
+# import numpy as np
 
 
 #register Api
@@ -30,7 +30,7 @@ class LoginAPI(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.validated_data
+        user = serializer.validated_data
 
         return Response({
         "user": UserSerializer(user, context=self.get_serializer_context()).data,
@@ -45,3 +45,18 @@ class UserAPI(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    serializer_class = ProfileSerializer
+    permission_classes = [permissions.IsAuthenticated,]
+    queryset = Profile.objects.all()
+
+    # def get_queryset(self):
+    #     return self.request.user.profiles.all()
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+        #saving a profile to it's user
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
