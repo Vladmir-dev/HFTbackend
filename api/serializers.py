@@ -43,3 +43,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             validated_data['password']
         )
         return user
+
+class AlgoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Algo
+        fileds = '__all__'

@@ -18,3 +18,4 @@ def profile_list(request):
     profile = Profile.objects.all()
     serializer = ProfileSerializer(profile, many=True)
     return Response(serializer.data)
+

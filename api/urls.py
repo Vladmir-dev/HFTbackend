@@ -16,5 +16,6 @@ urlpatterns = [
     path('auth/login', LoginAPI.as_view()),
     path('auth/logout', knox_views.LogoutView.as_view()),
     path('auth/user', UserAPI.as_view()),
+    path('order/', AlgoViewSet.as_view()),
     path('', include(router.urls)),
 ]

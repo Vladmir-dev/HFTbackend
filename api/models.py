@@ -45,3 +45,14 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.account_type
+
+class Algo(models.Model):
+    symbol = models.CharField(max_length=5)
+    quantity = models.PositiveIntegerField()
+    user = models.ForeignKey(
+        User, related_name="algo", on_delete=models.CASCADE, null=True
+    )
+
+    def __str__(self) -> str:
+        return self.symbol
+

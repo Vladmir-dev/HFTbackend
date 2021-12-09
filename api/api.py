@@ -4,6 +4,7 @@ from rest_framework import viewsets, permissions, generics
 from rest_framework import status
 from rest_framework.response import Response
 from knox.models import AuthToken
+from .main2 import TradeAlgo 
 # import numpy as np
 
 
@@ -60,3 +61,17 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
+
+class AlgoViewSet(generics.GenericAPIView):
+    serializer_class = AlgoSerializer
+    
+    # algo = TradeAlgo()
+    
+    def post(self,request):
+        symbol = request.data['symbol']
+        quantity = request.data['quantity']
+        print("symbol", symbol)
+        print("quantity", quantity)
+        algo = TradeAlgo(symbol, quantity)
+        queryset = algo.trade(symbol, quantity)
+        return Response(queryset)
