@@ -44,7 +44,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
         return user
 
-class AlgoSerializer(serializers.ModelSerializer):
+class OrderSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Algo
-        fileds = '__all__'
+        model = Order
+        fields = '__all__'
