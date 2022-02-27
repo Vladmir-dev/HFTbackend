@@ -31,6 +31,14 @@ class LoginSerializer(serializers.Serializer):
 
 
 class RegisterSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField()
+    
+    def validate_email(self, value):
+        email = value.lower()
+        if User.objects.filter(email__iexact=email).exists():
+            raise serializers.ValidationError("Duplicate")
+        return email
+
     class Meta:
         model = User
         fields = ('username', 'email', 'password')

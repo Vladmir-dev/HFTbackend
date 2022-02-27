@@ -7,7 +7,7 @@ from rest_framework_swagger.views import get_swagger_view
 from django.conf.urls import url
 
 router = DefaultRouter()
-router.register(r'profiles', ProfileViewSet, basename='profile')
+# router.register(r'profiles', ProfileViewSet, basename='profile')
 
 schema_view = get_swagger_view(title='Maxima api')
 
@@ -22,5 +22,6 @@ urlpatterns = [
     path('auth/logout', knox_views.LogoutView.as_view()),
     path('auth/user', UserAPI.as_view()),
     path('auth/order/', AlgoViewSet.as_view()),
-    path('', include(router.urls)),
+    path('auth/profile/', ProfileViewSet.as_view()),
+    # path('', include(router.urls)),
 ]
