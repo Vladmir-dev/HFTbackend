@@ -44,7 +44,7 @@ class Profile(models.Model):
     )
 
     def __str__(self):
-        return self.account_type
+        return self.user.username
 
 class Algo(models.Model):
     symbol = models.CharField(max_length=5)

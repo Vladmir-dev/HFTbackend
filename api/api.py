@@ -18,10 +18,7 @@ class RegisterAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
 
-        return Response({
-          "user" : UserSerializer(user, context=self.get_serializer_context()).data,
-          "token" : AuthToken.objects.create(user)[1]
-        })
+        return Response("User successfully created")
 
 
 #Login Api
@@ -47,20 +44,17 @@ class UserAPI(generics.RetrieveAPIView):
     def get_object(self):
         return self.request.user
 
-class ProfileViewSet(viewsets.ModelViewSet):
+class ProfileViewSet(generics.GenericAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [permissions.IsAuthenticated,]
-    queryset = Profile.objects.all()
 
-    # def get_queryset(self):
-    #     return self.request.user.profiles.all()
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response("created profile for user")
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-        #saving a profile to it's user
-
-    def perform_update(self, serializer):
-        serializer.save(user=self.request.user)
+    
 
 class AlgoViewSet(generics.GenericAPIView):
     serializer_class = AlgoSerializer
