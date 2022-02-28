@@ -33,13 +33,21 @@ CITIES = (
     ('muyinga', 'Muyinga'),
 )
 
+SYMBOL = (
+    ('QQQ', 'QQQ'),
+    ('SPY', 'SPY'),
+    ('FB', 'FB'),
+    ('AAPL', 'AAPL'),
+    )
+
+
 class Profile(models.Model):
     account_type = models.CharField(max_length=100, choices=ACCOUNTS, blank=True)
     mobile_number = models.IntegerField(unique=True)
     country_of_residence = models.CharField(max_length=100, choices=COUNTRIES, blank=True)
     city = models.CharField(max_length=100, choices=CITIES, blank=True)
     zip_code = models.IntegerField()
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         User, related_name="profiles", on_delete=models.CASCADE, null=True
     )
 
@@ -49,7 +57,7 @@ class Profile(models.Model):
 class Algo(models.Model):
     symbol = models.CharField(max_length=5)
     quantity = models.PositiveIntegerField()
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         User, related_name="algo", on_delete=models.CASCADE, null=True
     )
 

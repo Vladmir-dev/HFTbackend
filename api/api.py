@@ -67,5 +67,5 @@ class AlgoViewSet(generics.GenericAPIView):
         print("symbol", symbol)
         print("quantity", quantity)
         algo = TradeAlgo(symbol, quantity)
-        queryset = algo.trade(symbol, quantity)
-        return Response(queryset)
+        query = algo.trade(symbol, quantity)
+        return Response(query, status=status.HTTP_201_CREATED)
