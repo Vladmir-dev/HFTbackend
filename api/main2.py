@@ -138,7 +138,6 @@ class TradeAlgo:
             self.wait_for_market_open()
             self.trade()
 
-        return order
 
 
 
